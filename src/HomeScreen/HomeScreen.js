@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { View, Text, Button } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import metadata from './../storage.medata.json';
+import { useIsFocused } from "@react-navigation/native";
 
 function HomeScreen({ navigation }) {
     const [name, setName] = useState("");
-    useEffect(() => { getUserName() }, []);
+    // Toda vez que a tela sair ou entrar de foco ela muda
+    const focus = useIsFocused();
+    useEffect(() => { getUserName() }, [focus]);
+
 
     const getUserName = async () => {
         const username = await AsyncStorage.getItem(metadata.USER.USERNAME);
